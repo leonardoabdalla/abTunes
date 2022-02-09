@@ -17,9 +17,9 @@ class App extends React.Component {
         <Switch>
           <Route exact path="/" component={ Login } />
           <Route path="/search" component={ Search } />
-          <Route path="/album:id" component={ Album } />
+          <Route path="/album/:id" component={ Album } />
           <Route path="/favorites" component={ Favorites } />
-          <Route path="/profile" component={ Profile } />
+          <Route exact path="/profile" component={ Profile } />
           <Route path="/profile/edit" component={ ProfileEdit } />
           <Route path="*" component={ NotFound } />
           {/* NotFound precisa ser colocado por ultimo, caso contrário tudo que estiver abaixo não será reinderizado */}
