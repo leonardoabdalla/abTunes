@@ -19,6 +19,7 @@ class App extends React.Component {
           <Route path="/search" component={ Search } />
           <Route path="/album/:id" component={ Album } />
           <Route path="/favorites" component={ Favorites } />
+          {/* no profile foi adicionado o exact seguindo o mesmo principio do "/", se não colocasse o exact ao colocar no browser "/profile/edit" iria cair em profile */}
           <Route exact path="/profile" component={ Profile } />
           <Route path="/profile/edit" component={ ProfileEdit } />
           <Route path="*" component={ NotFound } />
