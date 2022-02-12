@@ -16,12 +16,12 @@ class App extends React.Component {
         {/* Switch irá reinderizar apenas o primeiro que encontrar, ele é necessário para não reiderizar a notfaund com outro component. */}
         <Switch>
           <Route exact path="/" component={ Login } />
-          <Route path="/search" component={ Search } />
-          <Route path="/album/:id" component={ Album } />
-          <Route path="/favorites" component={ Favorites } />
+          <Route exact path="/search" component={ Search } />
+          <Route exact path="/album/:id" component={ Album } />
+          <Route exact path="/favorites" component={ Favorites } />
           {/* no profile foi adicionado o exact seguindo o mesmo principio do "/", se não colocasse o exact ao colocar no browser "/profile/edit" iria cair em profile */}
           <Route exact path="/profile" component={ Profile } />
-          <Route path="/profile/edit" component={ ProfileEdit } />
+          <Route exact path="/profile/edit" component={ ProfileEdit } />
           <Route path="*" component={ NotFound } />
           {/* NotFound precisa ser colocado por ultimo, caso contrário tudo que estiver abaixo não será reinderizado */}
         </Switch>
