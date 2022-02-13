@@ -15,14 +15,12 @@ class Header extends React.Component {
   componentDidMount() { this.newApi(); }
 
   async newApi() {
-    const { name } = this.state;
     const nome = await getUser();
     this.setState({
       name: nome.name,
     });
     this.setState({ loading: false });
     console.log(nome);
-    console.log(name);
   }
 
   render() {
