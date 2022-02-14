@@ -13,28 +13,31 @@ class Search extends React.Component {
       album: [],
       loading: false,
       click: false,
+      nameFixo: '',
     };
   }
 
   handleChange = (event) => {
-    this.setState({ name: event.target.value },
+    this.setState({ name: event.target.value, nameFixo: event.target.value },
       this.buttonConditions);
   }
 
   buttonConditions = () => {
-    const { name } = this.state;
-    const condicao = (name.length >= 2);
+    const { name, nameFixo } = this.state;
+    const condicao = (name.length && nameFixo.length >= 2);
     this.setState({
       button: !condicao,
     });
   }
 
   requisicaoApi = async () => {
-    const { name } = this.state;
+    const { nameFixo } = this.state;
     this.setState({
       loading: true,
+      name: '',
+      button: true,
     });
-    const requisicao = await searchAlbumsAPI(name);
+    const requisicao = await searchAlbumsAPI(nameFixo);
     console.log(requisicao);
     this.setState({
       album: requisicao,
@@ -42,12 +45,17 @@ class Search extends React.Component {
     this.setState({
       loading: false,
       click: true,
-
     });
   }
 
   render() {
-    const { name, button, album, loading, click } = this.state;
+    const { name, button, album, loading, click, nameFixo } = this.state;
+    const clicou = (click === true);
+    const clickConfere = (album.length === 0);
+    const quantidade = (clickConfere === true && clicou === true);
+    console.log(quantidade);
+    console.log(clicou);
+    console.log(clickConfere);
     return (
       <div data-testid="page-search">
         <Header />
@@ -73,13 +81,11 @@ class Search extends React.Component {
                   Pesquisar
                 </button>
               </form>
-              {(click
-              && (
-                album.length <= 0)
+              {((quantidade && clicou)
                 ? <h2>Nenhum álbum foi encontrado</h2>
                 : (
                   <div>
-                    <p>{`Resultado de álbuns de: ${name}`}</p>
+                    <p>{`Resultado de álbuns de: ${nameFixo}`}</p>
                     {album.map((artista) => (
                       <div key={ artista.collectionId }>
                         <img
