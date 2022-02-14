@@ -55,53 +55,56 @@ class Search extends React.Component {
           : (
             <div>
               <form>
-                <input
-                  data-testid="search-artist-input"
-                  value={ name }
-                  onChange={ this.handleChange }
-                />
+                <label htmlFor="nome">
+                  <input
+                    data-testid="search-artist-input"
+                    type="text"
+                    name="nome"
+                    value={ name }
+                    onChange={ this.handleChange }
+                  />
+                </label>
                 <button
-                  type="button"
                   data-testid="search-artist-button"
+                  type="button"
                   disabled={ button }
                   onClick={ this.requisicaoApi }
                 >
                   Pesquisar
                 </button>
               </form>
-              { click && (
-                <div>
-                  <p>
-                    { `Resultado de álbuns de: ${artistName} ` }
-                  </p>
-
-                  { album.length > 0
-                    ? album.map((artista) => (
-                      <div key={ artista.artistId }>
-                        <p>{ artista.artistId }</p>
-                        <p>{ artista.artistName }</p>
-                        <p>{ artista.collectionId }</p>
-                        <p>{ artista.ollectionName }</p>
-                        <p>{ artista.collectionPrice }</p>
-                        <img src={ artista.artworkUrl100 } alt={ artista.artistName } />
-                        <p>{ artista.releaseDate }</p>
-                        <p>{ artista.trackCount }</p>
+              {(click
+              && (
+                album.length <= 0)
+                ? <h2>Nenhum álbum foi encontrado</h2>
+                : (
+                  <div>
+                    <p>{`Resultado de álbuns de: ${name}`}</p>
+                    {album.map((artista) => (
+                      <div key={ artista.collectionId }>
+                        <img
+                          src={ artista.artworkUrl100 }
+                          alt={ artista.collectionName }
+                        />
                         <div>
                           <Link
-                            to={ `/album/${artista.collectionId}` }
                             data-testid={ `link-to-album-${artista.collectionId}` }
+                            to={ `/album/${artista.collectionId}` }
+                            key={ artista.collectionId }
+                            className="album-container"
                           >
                             <img
                               src={ artista.artworkUrl100 }
-                              alt={ `Imagem ${artista.collectionName}` }
+                              alt={ `album ${artista.collectionName}` }
                             />
                             <h3>{artista.collectionName}</h3>
                             <p>{artista.artistName}</p>
                           </Link>
                         </div>
+                        <p>{ artista.artistName }</p>
                       </div>
-                    )) : <h3>Nenhum álbum foi encontrado</h3>}
-                </div>
+                    ))}
+                  </div>)
               )}
             </div>
           )}
