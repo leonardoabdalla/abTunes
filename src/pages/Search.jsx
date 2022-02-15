@@ -50,12 +50,9 @@ class Search extends React.Component {
 
   render() {
     const { name, button, album, loading, click, nameFixo } = this.state;
-    const clicou = (click === true);
     const clickConfere = (album.length === 0);
-    const quantidade = (clickConfere === true && clicou === true);
-    console.log(quantidade);
-    console.log(clicou);
-    console.log(clickConfere);
+    const quantidade = (clickConfere === true && click === true);
+    console.log(click);
     return (
       <div data-testid="page-search">
         <Header />
@@ -81,7 +78,7 @@ class Search extends React.Component {
                   Pesquisar
                 </button>
               </form>
-              {((quantidade && clicou)
+              {click && ((quantidade)
                 ? <h2>Nenhum álbum foi encontrado</h2>
                 : (
                   <div>
@@ -110,8 +107,7 @@ class Search extends React.Component {
                         <p>{ artista.artistName }</p>
                       </div>
                     ))}
-                  </div>)
-              )}
+                  </div>))}
             </div>
           )}
       </div>

@@ -17,7 +17,7 @@ class App extends React.Component {
         <Switch>
           <Route exact path="/" component={ Login } />
           <Route exact path="/search" component={ Search } />
-          <Route exact path="/album/:id" component={ Album } />
+          <Route exact path="/album/:id" render={ (props) => <Album { ...props } /> } />
           <Route exact path="/favorites" component={ Favorites } />
           {/* no profile foi adicionado o exact seguindo o mesmo principio do "/", se não colocasse o exact ao colocar no browser "/profile/edit" iria cair em profile */}
           <Route exact path="/profile" component={ Profile } />
