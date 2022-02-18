@@ -13,13 +13,17 @@ class MusicCard extends React.Component {
   }
 
   componentDidMount = async () => {
+    this.setState({ loading: true });
     const musicasFavApi = await getFavoriteSongs();
     this.setState({
       musicasFav: musicasFavApi,
+      loading: false,
     });
   }
 
   musicasFavoritas = async (musica) => {
+    const { musicasFav } = this.state;
+    this.setState({ musicasFav: [...musicasFav, musica] });
     this.setState({
       loading: true,
     });
@@ -27,10 +31,7 @@ class MusicCard extends React.Component {
     this.setState({
       loading: false,
     });
-    const musicasFavApi = await getFavoriteSongs();
-    this.setState({
-      musicasFav: musicasFavApi,
-    });
+    // const musicasFavApi = await getFavoriteSongs();
   }
 
   render() {
@@ -39,12 +40,13 @@ class MusicCard extends React.Component {
     // console.log(musicas);
     return (
       <div>
-        { loading && <Carregando /> }
-        <div>
-          { musics.map((musica) => (
-            <div key={ musica.artistId }>
-              <p>{ musica.trackName }</p>
-              { musica.previewUrl
+        { loading ? <Carregando />
+          : (
+            <div>
+              { musics.map((musica) => (
+                <div key={ musica.artistId }>
+                  <p>{ musica.trackName }</p>
+                  { musica.previewUrl
               && (
                 <div>
                   <audio data-testid="audio-component" src={ musica.previewUrl } controls>
@@ -71,9 +73,10 @@ class MusicCard extends React.Component {
                   </label>
                 </div>
               )}
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
+          )}
       </div>
     );
   }
