@@ -7,13 +7,19 @@ class MusicCard extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      musicas: [],
+      musicasFav: [],
       loading: false,
     };
   }
 
+  componentDidMount = async () => {
+    const musicasFavApi = await getFavoriteSongs();
+    this.setState({
+      musicasFav: musicasFavApi,
+    });
+  }
+
   musicasFavoritas = async (musica) => {
-    const { musicas } = this.state;
     this.setState({
       loading: true,
     });
@@ -21,29 +27,15 @@ class MusicCard extends React.Component {
     this.setState({
       loading: false,
     });
-    this.setState({ loading: true });
     const musicasFavApi = await getFavoriteSongs();
     this.setState({
-      loading: false,
-      musicas: [musicasFavApi],
+      musicasFav: musicasFavApi,
     });
-    console.log(musicas);
-    console.log(musicasFavApi);
   }
-
-  // checkSelecionado = (musica) => {
-  //   const { musicas } = this.state;
-  //   const marcados = musicas.map((music) => {
-  //     if (music.artistId === musica.artistId) {
-  //       return checked;
-  //     }
-  //     return {};
-  //   });
-  // }
 
   render() {
     const { musics } = this.props;
-    const { loading } = this.state;
+    const { loading, musicasFav } = this.state;
     // console.log(musicas);
     return (
       <div>
@@ -68,12 +60,12 @@ class MusicCard extends React.Component {
                       data-testid={ `checkbox-music-${musica.trackId}` }
                       type="checkbox"
                       name={ musica.trackId }
-                      onChange={ (event) => {
+                      onClick={ (event) => {
                         console.log(event);
                         this.musicasFavoritas(musica);
                       } }
-                      // checked={ musicas.some(music => music.trackId === musica.trackId) }
-                      // [2, 5, 8, 1, 4].some(elem => elem > 10);  // false
+                      checked={ musicasFav
+                        .some((elem) => elem.trackId === musica.trackId) }
                     />
                     Favorita
                   </label>

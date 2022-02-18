@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Header from './Header';
-import getMusics from '../services/musicsAPI';
 import MusicCard from './MusicCard';
+import getMusics from '../services/musicsAPI';
 
 class Album extends React.Component {
   constructor() {
@@ -28,6 +28,7 @@ class Album extends React.Component {
     return (
       <div>
         <Header />
+        {/* botão para testes */}
         <button type="button" onClick={ this.enviaId }> botão </button>
         <p data-testid="artist-name">{ musics.length > 0 && musics[0].artistName }</p>
         <p data-testid="album-name">{ musics.length > 0 && musics[0].collectionName }</p>
@@ -43,7 +44,11 @@ class Album extends React.Component {
 }
 
 Album.propTypes = {
-  match: PropTypes.string.isRequired,
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      id: PropTypes.string,
+    }),
+  }).isRequired,
 };
 
 export default Album;

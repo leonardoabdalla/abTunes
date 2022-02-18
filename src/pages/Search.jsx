@@ -51,7 +51,7 @@ class Search extends React.Component {
   render() {
     const { name, button, album, loading, click, nameFixo } = this.state;
     const clickConfere = (album.length === 0);
-    const quantidade = (clickConfere === true && click === true);
+    const quantidade = (clickConfere && click);
     console.log(click);
     return (
       <div data-testid="page-search">
@@ -85,10 +85,6 @@ class Search extends React.Component {
                     <p>{`Resultado de álbuns de: ${nameFixo}`}</p>
                     {album.map((artista) => (
                       <div key={ artista.collectionId }>
-                        <img
-                          src={ artista.artworkUrl100 }
-                          alt={ artista.collectionName }
-                        />
                         <div>
                           <Link
                             data-testid={ `link-to-album-${artista.collectionId}` }
