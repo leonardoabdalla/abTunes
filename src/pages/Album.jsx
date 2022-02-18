@@ -26,7 +26,7 @@ class Album extends React.Component {
   render() {
     const { musics } = this.state;
     return (
-      <div>
+      <div data-testid="page-album">
         <Header />
         {/* botão para testes */}
         <button type="button" onClick={ this.enviaId }> botão </button>
