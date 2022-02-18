@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { addSong, getFavoriteSongs } from '../services/favoriteSongsAPI';
+import { addSong, getFavoriteSongs, removeSong } from '../services/favoriteSongsAPI';
 import Carregando from './Carregando';
 
 class MusicCard extends React.Component {
@@ -22,22 +22,45 @@ class MusicCard extends React.Component {
   }
 
   musicasFavoritas = async (musica) => {
-    const { musicasFav } = this.state;
-    this.setState({ musicasFav: [...musicasFav, musica] });
-    this.setState({
-      loading: true,
-    });
-    await addSong(musica);
-    this.setState({
-      loading: false,
-    });
-    // const musicasFavApi = await getFavoriteSongs();
+    this.removeEAdicionaMusicas(musica);
+    // this.setState({
+    //   loading: true,
+    // });
+    // this.setState({
+    //   loading: false,
+    // });
   }
+
+  removeEAdicionaMusicas = async (musica) => {
+    const { musicasFav } = this.state;
+    const musicaRepetida = musicasFav
+      .some((musicaT) => musicaT.trackId === musica.trackId);
+    if (musicaRepetida) {
+      this.setState({
+        loading: true,
+      });
+      removeSong(musica);
+      this.setState({ loading: true });
+      await removeSong(musica);
+      this.setState({ loading: false });
+      const musicasFavAtualizadas = musicasFav
+        .filter((musicaFav) => musicaFav.trackId !== musica.trackId);
+      // const indiceDaMusica = musicasFav.indexOf(musica);
+      this.setState({ musicasFav: musicasFavAtualizadas });
+      // this.setState({ musicasFav: [...new Set(musicasFav)] });
+    } else {
+      this.setState({
+        loading: true,
+      });
+      await addSong(musica);
+      this.setState({ musicasFav: [...musicasFav, musica] });
+      this.setState({ loading: false });
+    }
+  };
 
   render() {
     const { musics } = this.props;
     const { loading, musicasFav } = this.state;
-    // console.log(musicas);
     return (
       <div>
         { loading ? <Carregando />
