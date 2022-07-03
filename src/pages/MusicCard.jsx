@@ -23,12 +23,6 @@ class MusicCard extends React.Component {
 
   musicasFavoritas = async (musica) => {
     this.removeEAdicionaMusicas(musica);
-    // this.setState({
-    //   loading: true,
-    // });
-    // this.setState({
-    //   loading: false,
-    // });
   }
 
   removeEAdicionaMusicas = async (musica) => {

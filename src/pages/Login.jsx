@@ -52,6 +52,7 @@ class Login extends React.Component {
             <form>
               <input
                 data-testid="login-name-input"
+                id="Favorita"
                 value={ Name }
                 onChange={ this.handleChange }
               />
